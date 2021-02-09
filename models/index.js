@@ -5,7 +5,7 @@ var basename = path.basename(module.filename);
 var db = {};
 
 //Create a Sequelize connection to the database using the URL in config/config.js
-var sequelize = new Sequelize("postgres://postgres:postgres@db:5432/postgres", {
+var sequelize = new Sequelize("postgres://postgres:postgres@localhost:5432/postgres", {
     define: {
         timestamps: false
     },
@@ -20,15 +20,15 @@ var sequelize = new Sequelize("postgres://postgres:postgres@db:5432/postgres", {
 
 fs
     .readdirSync(__dirname)
-    .filter(function (file) {
+    .filter(function(file) {
         return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })
-    .forEach(function (file) {
+    .forEach(function(file) {
         var model = sequelize['import'](path.join(__dirname, file));
         db[model.name] = model;
     });
 
-Object.keys(db).forEach(function (modelName) {
+Object.keys(db).forEach(function(modelName) {
     if (db[modelName].associate) {
         db[modelName].associate(db);
     }
